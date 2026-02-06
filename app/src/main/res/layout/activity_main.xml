@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main"
     android:orientation="vertical"
-    android:gravity="center"
+    android:gravity="center_horizontal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
@@ -34,7 +34,7 @@
 
     </LinearLayout>
 
-<!--
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -58,10 +58,10 @@
             android:layout_marginStart="30dp"/>
 
     </LinearLayout>
-    -->
 
 
-    <TextView
+
+<!--    <TextView
         android:id = "@+id/message_box"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -69,6 +69,6 @@
         android:text = "@string/begin_game_text">
 
     </TextView>
-
+    -->
 
 </LinearLayout>
