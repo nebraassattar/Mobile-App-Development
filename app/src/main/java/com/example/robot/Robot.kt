@@ -2,5 +2,7 @@ package com.example.robot
 
 data class Robot(
     val robotMessageResource : Int,
-    var myTurn : Boolean
+    var myTurn : Boolean,
+    val robotImageLarge : Int,
+    val robotImageSmall : Int
 )

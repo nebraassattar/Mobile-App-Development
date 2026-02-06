@@ -19,10 +19,14 @@ class MainActivity : AppCompatActivity() {
     private lateinit var clockwiseButton : ImageView
     private lateinit var counterClockwiseButton : ImageView
     private var turnCount /*: Int*/ = 0
-    private val Robots = listOf(
-        Robot(R.string.red_message_text, false),
-        Robot(R.string.white_message_text, false),
-        Robot(R.string.yellow_message_text, false)
+    private lateinit var robotImages : MutableList<ImageView>
+    private val robots = listOf(
+        Robot(R.string.red_message_text, false,
+            R.drawable.robot_red_large, R.drawable.robot_red_small),
+        Robot(R.string.white_message_text, false,
+            R.drawable.robot_white_large, R.drawable.robot_white_small),
+        Robot(R.string.yellow_message_text, false,
+            R.drawable.robot_yellow_large, R.drawable.robot_yellow_small)
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,12 +42,13 @@ class MainActivity : AppCompatActivity() {
         redRobotImg = findViewById(R.id.red_robot)
         whiteRobotImg = findViewById(R.id.white_robot)
         yellowRobotImg = findViewById(R.id.yellow_robot)
-        // messageBox = findViewById(R.id.message_box)
-        clockwiseButton = findViewById(R.id.clockwise_button)
-        counterClockwiseButton = findViewById(R.id.counter_clockwise_button)
+        messageBox = findViewById(R.id.message_box)
+        // clockwiseButton = findViewById(R.id.clockwise_button)
+        // counterClockwiseButton = findViewById(R.id.counter_clockwise_button)
+        robotImages = mutableListOf(redRobotImg, whiteRobotImg, yellowRobotImg)
 
         // This was done in class, had to comment out for the homework
-        /*redRobotImg.setOnClickListener {
+        redRobotImg.setOnClickListener {
             // Toast.makeText(this, "Red Robot Clicked", Toast.LENGTH_SHORT).show()
             toggleImage()
         }
@@ -56,37 +61,41 @@ class MainActivity : AppCompatActivity() {
         yellowRobotImg.setOnClickListener {
             // Toast.makeText(this, "Yellow Robot Clicked", Toast.LENGTH_SHORT).show()
             toggleImage()
-        }*/
+        }
 
-        clockwiseButton.setOnClickListener {
+        /* clockwiseButton.setOnClickListener {
             toggleImageButtonClockwise()
         }
 
         counterClockwiseButton.setOnClickListener {
             toggleImageButtonCounterClockwise()
-        }
+        } */
     } // End of onCreate
 
-    /* private fun toggleImage(){
+    private fun toggleImage(){
         turnCount++
         if (turnCount > 3) {
             turnCount = 1
         }
-        if (turnCount == 1) {
-            redRobotImg.setImageResource(R.drawable.robot_red_large)
-            whiteRobotImg.setImageResource(R.drawable.robot_white_small)
-            yellowRobotImg.setImageResource(R.drawable.robot_yellow_small)
-        }else if (turnCount == 2) {
-            whiteRobotImg.setImageResource(R.drawable.robot_white_large)
-            redRobotImg.setImageResource(R.drawable.robot_red_small)
-            yellowRobotImg.setImageResource(R.drawable.robot_yellow_small)
-        }else {
-            yellowRobotImg.setImageResource(R.drawable.robot_yellow_large)
-            redRobotImg.setImageResource(R.drawable.robot_red_small)
-            whiteRobotImg.setImageResource(R.drawable.robot_white_small)
-        }
-    } */
+//        if (turnCount == 1) {
+//            redRobotImg.setImageResource(R.drawable.robot_red_large)
+//            whiteRobotImg.setImageResource(R.drawable.robot_white_small)
+//            yellowRobotImg.setImageResource(R.drawable.robot_yellow_small)
+//        }else if (turnCount == 2) {
+//            whiteRobotImg.setImageResource(R.drawable.robot_white_large)
+//            redRobotImg.setImageResource(R.drawable.robot_red_small)
+//            yellowRobotImg.setImageResource(R.drawable.robot_yellow_small)
+//        }else {
+//            yellowRobotImg.setImageResource(R.drawable.robot_yellow_large)
+//            redRobotImg.setImageResource(R.drawable.robot_red_small)
+//            whiteRobotImg.setImageResource(R.drawable.robot_white_small)
+//        }
+        updateMessageBox()
+        setRobotTurn()
+        setRobotImages()
+    }
 
+    /* Code for Homework 1
     private fun toggleImageButtonCounterClockwise() {
         turnCount++
         if (turnCount > 3) {
@@ -132,14 +141,35 @@ class MainActivity : AppCompatActivity() {
             redRobotImg.setImageResource(R.drawable.robot_red_small)
             whiteRobotImg.setImageResource(R.drawable.robot_white_small)
         }
-    }
+    } */
 
 
 
     // Pick it up here
     private fun updateMessageBox() {
-        when(turnCount) {
-            1 -> messageBox.setText(R.string.red_message_text)
+//        when(turnCount) {
+//            1 -> messageBox.setText(R.string.red_message_text)
+//            2 -> messageBox.setText(R.string.white_message_text)
+//            else -> messageBox.setText(R.string.yellow_message_text)
+//        }
+        messageBox.setText(robots[turnCount - 1].robotMessageResource)
+    }
+
+    private fun setRobotTurn() {
+        for (robot in robots) {
+            robot.myTurn = false
+        }
+        robots[turnCount - 1].myTurn = true
+    }
+
+    private fun setRobotImages() {
+        for (indy in 0 .. 2) {
+            if (robots[indy].myTurn) {
+                robotImages[indy].setImageResource(robots[indy].robotImageLarge)
+            } else {
+                robotImages[indy].setImageResource(robots[indy].robotImageSmall)
+
+            }
         }
     }
 }
