@@ -7,6 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -24,6 +25,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var counterClockwiseButton: ImageView
     private var turnCount /*: Int*/ = 0
     private lateinit var robotImages: MutableList<ImageView>
+
+//    private val robotViewModel = RobotViewModel() // This runs but is bad, returns new viewModel
+    private val robotViewModel : RobotViewModel by viewModels() // This is good
     private val robots = listOf(
         Robot(
             R.string.red_message_text, false,
@@ -50,6 +54,7 @@ class MainActivity : AppCompatActivity() {
         }
         // All data, use package:mine
         Log.d(TAG, "Entered onCreate(savedInstanceState : Bundle?)")
+        Log.d(TAG, "Got a viewModel : $robotViewModel")
         redRobotImg = findViewById(R.id.red_robot)
         whiteRobotImg = findViewById(R.id.white_robot)
         yellowRobotImg = findViewById(R.id.yellow_robot)
