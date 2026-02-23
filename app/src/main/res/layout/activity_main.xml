@@ -74,9 +74,9 @@
         android:id="@+id/purchase_button"
         android:layout_width="110dp"
         android:layout_height="wrap_content"
-        android:text="Purchase Rewards"
+        android:text="@string/purchase_rewards"
         android:layout_marginTop="20dp"
-        android:layout_marginLeft="50dp">
+        android:layout_marginStart="50dp">
     </Button>
 
 

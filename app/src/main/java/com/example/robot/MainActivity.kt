@@ -1,5 +1,6 @@
 package com.example.robot
 
+import android.content.Intent
 import android.media.Image
 import android.os.Bundle
 import android.util.Log
@@ -75,6 +76,8 @@ class MainActivity : AppCompatActivity() {
 
         rewardPurchase.setOnClickListener {
             val intent = Intent(this, RobotPurchase::class.java)
+//          val currentEnergy = robotViewModel.currentTurn
+//          val intent = RobotPurchase.newIntent(this@MainActivity, currentEnergy)
             startActivity(intent)
         }
 
