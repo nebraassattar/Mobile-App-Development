@@ -11,6 +11,7 @@ class RobotViewModel : ViewModel() {
     }
 
     private var turnCount = 0
+    var robotEnergy = 0
     val currentTurn : Int
         get() = turnCount
 
@@ -23,5 +24,9 @@ class RobotViewModel : ViewModel() {
         if (turnCount > 3) {
             turnCount = 1
         }
+    }
+
+    fun incrementEnergy() {
+        robotEnergy++
     }
 }

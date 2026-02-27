@@ -1,5 +1,6 @@
 package com.example.robot
 
+import android.app.Activity
 import android.content.Intent
 import android.media.Image
 import android.os.Bundle
@@ -9,6 +10,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -74,11 +76,13 @@ class MainActivity : AppCompatActivity() {
             toggleImage()
         }
 
+
+
         rewardPurchase.setOnClickListener {
             val intent = Intent(this, RobotPurchase::class.java)
-//          val currentEnergy = robotViewModel.currentTurn
-//          val intent = RobotPurchase.newIntent(this@MainActivity, currentEnergy)
-            startActivity(intent)
+            val intent.putExtra("EXTRA_ROBOT_ENERGY", currentEnergy)
+            //startActivity(intent)
+            robotPurchaseLauncher.launch(intent)
         }
 
         whiteRobotImg.setOnClickListener {
@@ -106,6 +110,23 @@ class MainActivity : AppCompatActivity() {
         }
 
     } // End of onCreate
+
+    // In order to get back a result, we must prep the Activity by using registerForActivityResult
+    // The Android OS ha ActivityResult API
+
+    // There are two parts needed for the registerForActivityResult function
+    // 1. A Contract: Ours is a standard contract, we pass forward an Intent and get back a constant
+    // that constant will be wither Activity.RESULT_OK or Activity.RESULT_CANCELED
+    // 2. A lambda (The arrow indicates that the body of the lambda starts after it, not right after
+    // the curly braces
+    private val robotPurchaseLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()){result ->
+            if(result.resultCode == Activity.RESULT_OK){
+                //TODO do something with the data
+                val robotPurchaseMade = result.data?.getStringExtra(EXTRA_ROBOT_PURCHASE_MADE) ?: "0"
+                Toast.makeText(this, "Data: ${robotPurchaseMade}", Toast.LENGTH_SHORT).show()
+            }
+        }
 
     override fun onStart() {
         super.onStart()
@@ -141,14 +162,17 @@ class MainActivity : AppCompatActivity() {
             redRobotImg.setImageResource(R.drawable.robot_red_large)
             whiteRobotImg.setImageResource(R.drawable.robot_white_small)
             yellowRobotImg.setImageResource(R.drawable.robot_yellow_small)
+            robotViewModel.incrementEnergy()
         }else if (robotViewModel.currentTurn == 2) {
             whiteRobotImg.setImageResource(R.drawable.robot_white_large)
             redRobotImg.setImageResource(R.drawable.robot_red_small)
             yellowRobotImg.setImageResource(R.drawable.robot_yellow_small)
+            robotViewModel.incrementEnergy()
         }else {
             yellowRobotImg.setImageResource(R.drawable.robot_yellow_large)
             redRobotImg.setImageResource(R.drawable.robot_red_small)
             whiteRobotImg.setImageResource(R.drawable.robot_white_small)
+            robotViewModel.incrementEnergy()
         }
         updateMessageBox()
         setRobotTurn()
