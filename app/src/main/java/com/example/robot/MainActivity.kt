@@ -82,7 +82,7 @@ class MainActivity : AppCompatActivity() {
             //val intent = Intent(this, RobotPurchase::class.java)
             val currentEnergy = robotViewModel.robotEnergy
             val intent = RobotPurchase.newIntent(this@MainActivity, currentEnergy)
-            startActivity(intent)
+            robotPurchaseLauncher.launch(intent)
         }
 
         whiteRobotImg.setOnClickListener {
@@ -125,6 +125,9 @@ class MainActivity : AppCompatActivity() {
                 //TODO do something with the data
                 val robotPurchaseMade = result.data?.getStringExtra(EXTRA_ROBOT_PURCHASE_MADE) ?: "0"
                 Toast.makeText(this, "Data: ${robotPurchaseMade}", Toast.LENGTH_SHORT).show()
+
+                val updatedEnergy = result.data?.getIntExtra(EXTRA_ROBOT_ENERGY, robotViewModel.robotEnergy)?: robotViewModel.robotEnergy
+                robotViewModel.robotEnergy = updatedEnergy
             }
         }
 
