@@ -74,7 +74,6 @@ class RobotPurchase : AppCompatActivity() {
         resultIntent.putExtra(EXTRA_ROBOT_ENERGY, robotViewModel.robotEnergy)
         resultIntent.putExtra(EXTRA_ROBOT_PURCHASE_MADE, robotPurchaseMade.toString())
         setResult(Activity.RESULT_OK, resultIntent)
-        finish()
     }
 
 }

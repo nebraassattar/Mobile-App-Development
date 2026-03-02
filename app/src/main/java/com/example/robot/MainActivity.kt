@@ -124,7 +124,7 @@ class MainActivity : AppCompatActivity() {
             if(result.resultCode == Activity.RESULT_OK){
                 //TODO do something with the data
                 val robotPurchaseMade = result.data?.getStringExtra(EXTRA_ROBOT_PURCHASE_MADE) ?: "0"
-                Toast.makeText(this, "Data: ${robotPurchaseMade}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Purchased Reward: ${robotPurchaseMade}", Toast.LENGTH_SHORT).show()
 
                 val updatedEnergy = result.data?.getIntExtra(EXTRA_ROBOT_ENERGY, robotViewModel.robotEnergy)?: robotViewModel.robotEnergy
                 robotViewModel.robotEnergy = updatedEnergy
