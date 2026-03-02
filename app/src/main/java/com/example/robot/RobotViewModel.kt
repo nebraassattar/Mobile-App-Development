@@ -11,22 +11,31 @@ class RobotViewModel : ViewModel() {
     }
 
     private var turnCount = 0
-    var robotEnergy = 0
+    private var energy = 0
     val currentTurn : Int
         get() = turnCount
+    val robotEnergy : Int
+        get() = energy
 
     override fun onCleared() {
         super.onCleared()
     }
 
+    fun incrementEnergy() {
+        energy++
+    }
+    fun makePurchase(amount : Int) {
+        energy -= amount
+        if (energy < 0) {
+            energy = 0
+        }
+    }
     fun advanceTurn() {
         turnCount++
+        incrementEnergy()
         if (turnCount > 3) {
             turnCount = 1
         }
     }
 
-    fun incrementEnergy() {
-        robotEnergy++
-    }
 }

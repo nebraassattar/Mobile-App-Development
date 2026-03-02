@@ -79,10 +79,10 @@ class MainActivity : AppCompatActivity() {
 
 
         rewardPurchase.setOnClickListener {
-            val intent = Intent(this, RobotPurchase::class.java)
-            val intent.putExtra("EXTRA_ROBOT_ENERGY", currentEnergy)
-            //startActivity(intent)
-            robotPurchaseLauncher.launch(intent)
+            //val intent = Intent(this, RobotPurchase::class.java)
+            val currentEnergy = robotViewModel.robotEnergy
+            val intent = RobotPurchase.newIntent(this@MainActivity, currentEnergy)
+            startActivity(intent)
         }
 
         whiteRobotImg.setOnClickListener {
@@ -162,17 +162,14 @@ class MainActivity : AppCompatActivity() {
             redRobotImg.setImageResource(R.drawable.robot_red_large)
             whiteRobotImg.setImageResource(R.drawable.robot_white_small)
             yellowRobotImg.setImageResource(R.drawable.robot_yellow_small)
-            robotViewModel.incrementEnergy()
         }else if (robotViewModel.currentTurn == 2) {
             whiteRobotImg.setImageResource(R.drawable.robot_white_large)
             redRobotImg.setImageResource(R.drawable.robot_red_small)
             yellowRobotImg.setImageResource(R.drawable.robot_yellow_small)
-            robotViewModel.incrementEnergy()
         }else {
             yellowRobotImg.setImageResource(R.drawable.robot_yellow_large)
             redRobotImg.setImageResource(R.drawable.robot_red_small)
             whiteRobotImg.setImageResource(R.drawable.robot_white_small)
-            robotViewModel.incrementEnergy()
         }
         updateMessageBox()
         setRobotTurn()
