@@ -79,9 +79,7 @@ class MainActivity : AppCompatActivity() {
 
 
         rewardPurchase.setOnClickListener {
-            //val intent = Intent(this, RobotPurchase::class.java)
-            val currentEnergy = robotViewModel.robotEnergy
-            val intent = RobotPurchase.newIntent(this@MainActivity, currentEnergy)
+            val intent = RobotPurchase.newIntent(this@MainActivity, robotViewModel.robotEnergy, robotViewModel.currentTurn)
             robotPurchaseLauncher.launch(intent)
         }
 
@@ -124,7 +122,7 @@ class MainActivity : AppCompatActivity() {
             if(result.resultCode == Activity.RESULT_OK){
                 //TODO do something with the data
                 val robotPurchaseMade = result.data?.getStringExtra(EXTRA_ROBOT_PURCHASE_MADE) ?: "0"
-                Toast.makeText(this, "Purchased Reward: ${robotPurchaseMade}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Purchased Rewards: ${robotPurchaseMade}", Toast.LENGTH_SHORT).show()
 
                 val updatedEnergy = result.data?.getIntExtra(EXTRA_ROBOT_ENERGY, robotViewModel.robotEnergy)?: robotViewModel.robotEnergy
                 robotViewModel.robotEnergy = updatedEnergy

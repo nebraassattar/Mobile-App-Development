@@ -7,6 +7,10 @@
     <string name="reward_a_text">Reward A</string>
     <string name="reward_b_text">Reward B</string>
     <string name="reward_c_text">Reward C</string>
+    <string name="reward_d_text">Reward D</string>
+    <string name="reward_e_text">Reward E</string>
+    <string name="reward_f_text">Reward F</string>
+    <string name="reward_g_text">Reward G</string>
     <string name="robot_energy">0</string>
     <string name="purchased">Purchased</string>
     <string name="insufficient">Insufficient Resources</string>
