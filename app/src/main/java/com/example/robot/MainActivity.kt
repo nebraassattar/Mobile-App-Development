@@ -79,7 +79,7 @@ class MainActivity : AppCompatActivity() {
 
 
         rewardPurchase.setOnClickListener {
-            val intent = RobotPurchase.newIntent(this@MainActivity, robotViewModel.robotEnergy, robotViewModel.currentTurn)
+            val intent = RobotPurchase.newIntent(this@MainActivity, robotViewModel.currentRobotEnergy, robotViewModel.currentTurn)
             robotPurchaseLauncher.launch(intent)
         }
 
@@ -124,8 +124,8 @@ class MainActivity : AppCompatActivity() {
                 val robotPurchaseMade = result.data?.getStringExtra(EXTRA_ROBOT_PURCHASE_MADE) ?: "0"
                 Toast.makeText(this, "Purchased Rewards: ${robotPurchaseMade}", Toast.LENGTH_SHORT).show()
 
-                val updatedEnergy = result.data?.getIntExtra(EXTRA_ROBOT_ENERGY, robotViewModel.robotEnergy)?: robotViewModel.robotEnergy
-                robotViewModel.robotEnergy = updatedEnergy
+                val updatedEnergy = result.data?.getIntExtra(EXTRA_ROBOT_ENERGY, robotViewModel.currentRobotEnergy)?: robotViewModel.currentRobotEnergy
+                robotViewModel.setEnergy(updatedEnergy)
             }
         }
 
@@ -230,10 +230,14 @@ class MainActivity : AppCompatActivity() {
 
     // Pick it up here
     private fun updateMessageBox() {
-        when(robotViewModel.currentTurn) {
-            1 -> messageBox.setText(R.string.red_message_text)
-            2 -> messageBox.setText(R.string.white_message_text)
-            else -> messageBox.setText(R.string.yellow_message_text)
+        if (robotViewModel.currentTurn == 1){
+            messageBox.setText(R.string.red_message_text)
+        }
+        else if (robotViewModel.currentTurn == 2){
+            messageBox.setText(R.string.white_message_text)
+        }
+        else{
+            messageBox.setText(R.string.yellow_message_text)
         }
         messageBox.setText(robots[robotViewModel.currentTurn - 1].robotMessageResource)
     }

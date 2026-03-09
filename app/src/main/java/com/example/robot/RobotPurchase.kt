@@ -47,7 +47,7 @@ class RobotPurchase : AppCompatActivity() {
         )
         val currentTurn = intent.getIntExtra(EXTRA_CURRENT_TURN, 1)
 
-        balanceTotal.setText(robotViewModel.robotEnergy.toString())
+        balanceTotal.setText(robotViewModel.currentRobotEnergy.toString())
 
         val rewards = robotViewModel.selectedRewards
         val button = listOf(rewardA, rewardB, rewardC)
@@ -81,10 +81,10 @@ class RobotPurchase : AppCompatActivity() {
             robotViewModel.purchased.contains(index) -> {
                 Toast.makeText(this, R.string.insufficient, Toast.LENGTH_SHORT).show()
             }
-            robotViewModel.robotEnergy >= rewards.cost -> {
+            robotViewModel.currentRobotEnergy >= rewards.cost -> {
                 val name = getString(rewards.nameRes)
                 robotViewModel.makePurchase(index, name)
-                balanceTotal.text = robotViewModel.robotEnergy.toString()
+                balanceTotal.text = robotViewModel.currentRobotEnergy.toString()
                 Toast.makeText(this, "$name ${getString(R.string.purchased)}", Toast.LENGTH_SHORT).show()
                 refreshButtonStates()
                 sendResults()
@@ -106,16 +106,20 @@ class RobotPurchase : AppCompatActivity() {
 
     private fun sendResults() {
         val resultIntent = Intent().apply {
-            putExtra(EXTRA_ROBOT_ENERGY, robotViewModel.robotEnergy)
+            putExtra(EXTRA_ROBOT_ENERGY, robotViewModel.currentRobotEnergy)
             putExtra(EXTRA_ROBOT_PURCHASE_MADE, robotViewModel.history.joinToString(", "))
         }
         setResult(Activity.RESULT_OK, resultIntent)
     }
     private fun toggleImage(currentTurn : Int) {
-        when (currentTurn) {
-            1 -> whiteRobotImg.setImageResource(R.drawable.robot_red_large)
-            2 -> whiteRobotImg.setImageResource(R.drawable.robot_white_large)
-            else -> whiteRobotImg.setImageResource(R.drawable.robot_yellow_large)
+        if (currentTurn == 1){
+            whiteRobotImg.setImageResource(R.drawable.robot_red_large)
+        }
+        else if (currentTurn == 2){
+            whiteRobotImg.setImageResource(R.drawable.robot_white_large)
+        }
+        else{
+            whiteRobotImg.setImageResource(R.drawable.robot_yellow_large)
         }
     }
     companion object{
